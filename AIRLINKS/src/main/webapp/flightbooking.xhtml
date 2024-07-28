@@ -1,0 +1,122 @@
+	<!DOCTYPE html>
+	<html xmlns="http://www.w3.org/1999/xhtml"
+	      xmlns:h="http://java.sun.com/jsf/html"
+	      xmlns:f="http://java.sun.com/jsf/core"
+	      xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<head>
+	    <meta charset="utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	    <title>AIRLINK | BOOK FLIGHT</title>
+	    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" />
+	    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-ui-timepicker-addon@1.6.3/dist/jquery-ui-timepicker-addon.min.css"/>
+	    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+	     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-timepicker-addon@1.6.3/dist/jquery-ui-timepicker-addon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	    <link rel="stylesheet" type="text/css" href="resources/css/flightbooking.css" />
+	</head>
+	<body>
+	    <h:form id="bookingForm">
+	        <h:panelGroup layout="block" styleClass="booking section">
+	            <h:panelGroup layout="block" styleClass="section-center">
+	                <h:panelGroup layout="block" styleClass="container">
+	                    <h:panelGroup layout="block" styleClass="row">
+	                        <h:panelGroup layout="block" styleClass="col-md-4">
+	                            <h:panelGroup layout="block" styleClass="booking-cta">
+	                                <h1>BOOK YOUR FLIGHT TODAY</h1>
+	                                <p>AIRLINK is a leading provider of flight booking services, offering a seamless experience for travelers worldwide.</p>
+	                            </h:panelGroup>
+	                        </h:panelGroup>
+	                        <h:panelGroup layout="block" styleClass="col-md-7 col-md-offset-1">
+	                            <h:panelGroup layout="block" styleClass="booking-form">
+	                                <h:panelGrid columns="1">
+	                                    <h:panelGroup layout="block" styleClass="row">
+	                                        <h:panelGroup layout="block" styleClass="col-md-6">
+	                                            <h:panelGroup layout="block" styleClass="form-group">
+	                                                <h:outputText value="Flying from" styleClass="form-label" />
+	                                                <h:inputText value="#{flights.departureCity}" styleClass="form-control" required="true" requiredMessage="Please enter the departure city." />
+	                                            </h:panelGroup>
+	                                        </h:panelGroup>
+	                                        <h:panelGroup layout="block" styleClass="col-md-6">
+	                                            <h:panelGroup layout="block" styleClass="form-group">
+	                                                <h:outputText value="Flying to" styleClass="form-label" />
+	                                                <h:inputText value="#{flights.arrivalCity}" styleClass="form-control" required="true" requiredMessage="Please enter the arrival city." />
+	                                            </h:panelGroup>
+	                                        </h:panelGroup>
+	                                    </h:panelGroup>
+	                                    <h:panelGroup layout="block" styleClass="row">
+	                                        <h:panelGroup layout="block" styleClass="col-md-6">
+	                                            <h:panelGroup layout="block" styleClass="form-group">
+	                                                <h:outputText value="Seat type" styleClass="form-label" />
+	                                                <h:inputText value="#{flights.seatClass}" styleClass="form-control"  />
+	                                            </h:panelGroup>
+	                                        </h:panelGroup>
+	                                        <h:panelGroup layout="block" styleClass="col-md-6">
+                                            <h:panelGroup layout="block" styleClass="form-group">
+                                                <h:outputText value="DAY(YYYY-MM-DD HH:MM:SS)" styleClass="form-label" />
+                                                <h:inputText value="#{flights.departureTime}" styleClass="datepicker form-control" placeholder="">
+                                                    <f:converter converterId="localDateTimeConverter" />
+                                                </h:inputText>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+	                                    <div class="form-group">
+	                                                <span class="form-label">Adults (18+)</span>
+	                                                <select class="form-control">
+	                                                    <option>1</option>
+	                                                    <option>2</option>
+	                                                    <option>3</option>
+	                                                </select>
+	                                                <span class="select-arrow"></span>
+	                                            </div>
+	                                            <div class="col-md-6">
+	                                            <div class="form-group">
+	                                                <span class="form-label">Children (0-17)</span>
+	                                                <select class="form-control">
+	                                                    <option>0</option>
+	                                                    <option>1</option>
+	                                                    <option>2</option>
+	                                                </select>
+	                                                <span class="select-arrow"></span>
+	                                            </div>
+	                                        </div>
+	                                        <div class="col-md-6">
+	                                            <div class="form-group">
+	                                                <span class="form-label">Travel class</span>
+	                                                <select class="form-control">
+	                                                    <option>Economy class</option>
+	                                                    <option>Business class</option>
+	                                                    <option>First class</option>
+	                                                </select>
+	                                                <span class="select-arrow"></span>
+	                                            </div>
+	                                        </div>
+	                                    <h:panelGroup layout="block" styleClass="form-btn">
+	                                        <h:commandButton value="Show flights" action="#{flights.searchFlights}" styleClass="submit-btn" />
+	                                        <f:param name="seatClass" value="#{flights.seatClass}" />
+	                                    </h:panelGroup>
+	                                </h:panelGrid>
+	                            </h:panelGroup>
+	                        </h:panelGroup>
+	                    </h:panelGroup>
+	                </h:panelGroup>
+	            </h:panelGroup>
+	        </h:panelGroup>
+	    </h:form>
+	    <script>
+        $(document).ready(function() {
+            $(".datepicker").datetimepicker({
+                dateFormat: 'yy-mm-dd',
+                timeFormat: 'HH:mm',
+                showSecond: false,
+                minDate: 0  // This sets the minimum date to the current date
+            });
+        });
+    </script>
+	</body>
+	</html>
